@@ -1,0 +1,40 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --brand-teal: 47 184 168;    /* #2FB8A8 */
+    --brand-black: 13 13 13;   /* #0D0D0D */
+    --brand-white: 255 255 255; /* #FFFFFF */
+    --brand-gray: 117, 117, 117; /* #757575 */
+    --brand-bg-blue: 244, 250, 255; /* #F4FAFF */
+    --font-family: 'Raleway', sans-serif;
+  }
+
+  body {
+    font-family: var(--font-family);
+    @apply bg-white text-[rgb(var(--brand-black))] overflow-x-hidden;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Nata Sans', sans-serif;
+    @apply font-bold text-[rgb(var(--brand-black))];
+  }
+
+  p {
+    font-family: var(--font-family);
+    @apply text-[rgb(var(--brand-gray))] leading-relaxed;
+  }
+
+  ::selection {
+    @apply bg-[rgb(var(--brand-teal))] text-white;
+  }
+}
+
+@layer components {
+  .custom-container {
+    max-width: 1400px;       /* max width you want */
+    margin-inline: auto;     /* center horizontally */
+    padding-inline: 1rem;    /* optional padding on left/right */
+  }
+
+}
