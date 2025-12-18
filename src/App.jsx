@@ -1,9 +1,12 @@
+import Header from "./components/Header"
+import Hero from "./components/Hero"
 
 function App() {
 
   return (
     <>
-      <h1 className="bg-red-300">Vite + React</h1>
+      <Header />
+      <Hero />
     </>
   )
 }
