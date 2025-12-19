@@ -65,7 +65,7 @@ export default function Header() {
       className={`fixed left-1/2 -translate-x-1/2 z-50 transition-all duration-500 ease-in-out overflow-hidden
         ${
           isScrolled
-            ? "top-3 backdrop-blur-lg shadow-md rounded-4xl sm:rounded-[40px] w-[86%] bg-black/60"
+            ? "top-3 backdrop-blur-lg shadow-md rounded-4xl sm:rounded-[40px] w-[86%] bg-[#20283f]/60"
             : "top-0 w-full bg-transparent"
         }`}
     >
@@ -73,23 +73,17 @@ export default function Header() {
       <div className="custom-container flex items-center py-4 md:py-3">
 
         {/* MOBILE LOGO */}
-        <motion.a
-          href="/"
-          variants={itemVariants}
-          className="font-bold lg:hidden"
-        >
-          <img
-            src="/vite.svg"
-            alt="logo"
-            className="size-12 w-auto object-contain"
-          />
+        <motion.a href="/" variants={itemVariants}
+          className="lg:hidden font-medium font-nata text-2xl sm:text-3xl uppercase bg-linear-to-r from-[#93C5FD] via-[#C7D2FE] to-[#3B82F6]
+            bg-clip-text text-transparent">
+            Qutbee
         </motion.a>
 
         {/* DESKTOP MENU */}
         <div className="hidden lg:flex items-center justify-between w-full">
 
           {/* LEFT – SOCIAL */}
-          <div className={`flex-1 flex justify-start ${isScrolled ? "gap-1" : "gap-3"}`}>
+          <div className={`flex-1 flex justify-start ${isScrolled ? "gap-1" : "gap-2.5"}`}>
             {socialLinks.map(({ href, icon: Icon, label }) => (
               <motion.a
                 key={label}
@@ -112,12 +106,10 @@ export default function Header() {
 
           {/* CENTER LOGO */}
           <div className="flex justify-center">
-            <motion.a href="/" variants={itemVariants}>
-              <img
-                src="/vite.svg"
-                alt="logo"
-                className="size-12 w-auto object-contain"
-              />
+            <motion.a href="/" variants={itemVariants}
+              className="font-medium font-nata text-3xl uppercase bg-linear-to-r from-[#93C5FD] via-[#C7D2FE] to-[#3B82F6]
+              bg-clip-text text-transparent">
+              Qutbee
             </motion.a>
           </div>
 
@@ -155,7 +147,7 @@ export default function Header() {
 
       {/* MOBILE MENU (SAME SURFACE) */}
       {isMenuOpen && (
-        <div className="lg:hidden border-t border-white/10 px-6 py-6 bg-black/80 backdrop-blur-lg">
+        <div className="lg:hidden border-t border-white/10 px-6 py-6 bg-[#20283f]/60 backdrop-blur-lg">
 
           {/* SOCIAL ICONS */}
           <div className="flex justify-center gap-6 mb-6">
