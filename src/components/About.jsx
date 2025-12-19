@@ -1,9 +1,11 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { motion } from "framer-motion";
 import { HiArrowNarrowRight } from "react-icons/hi";
 import useScrollDirection from '../hook/UseScrollDirection';
 
 export default function About() {
+  const [animateDone, setAnimateDone] = useState(false);
+
   // Parent container animation
   const container = (scrollDir) => ({
     hidden: { opacity: 1 },
@@ -42,7 +44,7 @@ export default function About() {
         
       <div className="custom-container flex flex-col lg:flex-row items-end gap-10">
         <motion.div
-            className="w-full sm:w-[40%] flex justify-center"
+            className="w-full lg:w-[40%] flex justify-center"
             initial={{ opacity: 0, scale: 0.8, y: 50 }}
             whileInView={{ opacity: 1, scale: 1, y: 0 }}
             transition={{ duration: 0.91, ease: "easeOut" }}
@@ -52,26 +54,23 @@ export default function About() {
             <img
                 src="/faisal.webp"
                 alt="About-img"
-                className="w-full sm:h-100 lg:h-140 rounded-3xl object-cover"
+                className="w-full sm:h-100 lg:h-145 rounded-3xl object-cover object-bottom-right"
             />
         </motion.div>
 
-        <motion.div className='w-full sm:w-[60%]'
+        <motion.div className='w-full lg:w-[60%]'
           variants={container(scrollDir)}
           initial="hidden"
           whileInView="show"
           viewport={{ once: false, amount: 0.4 }}>
   
             <motion.h2 
-              className="text-2xl sm:text-3xl md:text-[40px] leading-tight font-medium capitalize mb-4 italic  
-              bg-linear-to-r
-              from-[#BAE6FD]
-              via-[#C7D2FE]
-              to-[#3B82F6]
-              bg-clip-text text-transparent"
-              variants={{ show: { transition: { staggerChildren: 0.15, staggerDirection: scrollDir === "down" ? 1 : -1 } } }}
+              className={`text-2xl sm:text-3xl md:text-[40px] leading-tight font-medium capitalize mb-4 italic  
+              ${animateDone ? 'bg-linear-to-r from-[rgb(var(--brand-dark-blue))] to-[rgb(var(--brand-primary-blue))] bg-clip-text text-transparent' : 'text-[#2E559B]'}`}
+              variants={{ show: { transition: { staggerChildren: 0.2, staggerDirection: scrollDir === "down" ? 1 : -1 } } }}
               initial="hidden"
               whileInView="show"
+              onAnimationComplete={() => setAnimateDone(true)}
             >
               {splitWords("Turning vision into impact through AI Technology, Healthcare, and Longevity across the Middle East.")}
             </motion.h2>
@@ -87,19 +86,19 @@ export default function About() {
             </motion.h3>
 
             <motion.p 
-             variants={item} className="text-[rgb(var(--brand-black))] text-base sm:text-lg mb-6 max-w-[90%]">
+             variants={item} className="text-[rgb(var(--brand-black))] text-base sm:text-lg mb-6 sm:max-w-[90%]">
               With over a decade of experience, I help individuals and organizations unlock their potential across the Middle East and beyond. My approach blends visionary strategy, operational excellence, and technology-driven innovation, ensuring each project not only succeeds but reshapes the industry it touches.
             </motion.p>
             <motion.p 
-             variants={item} className="text-[rgb(var(--brand-black))] text-base sm:text-lg mb-8 max-w-[90%]">
+             variants={item} className="text-[rgb(var(--brand-black))] text-base sm:text-lg mb-8 sm:max-w-[90%]">
               Technology is more than a tool, it is the canvas on which we build the future of business and humanity. Innovation is turning the impossible into the inevitable, and true progress lies in daring to create what others only imagine.
             </motion.p>
         
             <motion.div variants={item}>
               <button
-                className="group relative cursor-pointer flex items-center px-4 pr-14 py-2.5 bg-[rgba(19,21,23,0.1)] text-[rgb(var(--brand-black))] border border-[rgba(19,21,23,0.3)] font-semibold rounded-full shadow-inner shadow-[rgb(var(--brand-white))/50] overflow-hidden transition-all duration-300 ease-in-out active:scale-95">
+                className="cursor-pointer group relative flex items-center border-2 border-[rgb(var(--brand-light-blue))] px-4 pr-12  sm:pr-14 py-2 sm:py-2.5 bg-[rgb(var(--brand-white))] text-[rgb(var(--brand-black))] font-semibold rounded-full shadow-inner overflow-hidden active:scale-95 text-sm sm:text-base">
                   About Me
-                <div className="absolute right-1 top-1/2 transform -translate-y-1/2 flex items-center justify-center w-9 h-9 bg-[rgb(var(--brand-teal))] rounded-full shadow-md transition-all duration-300 ease-in-out group-hover:w-[calc(100%-0.5rem)]">
+                <div className="absolute right-1 top-1/2 -translate-y-1/2 size-7 sm:size-9 bg-linear-to-r from-[rgb(var(--brand-dark-blue))] to-[rgb(var(--brand-primary-blue))] rounded-full flex items-center justify-center transition-all duration-300 group-hover:w-[calc(100%-0.5rem)]">
                 <HiArrowNarrowRight className="text-[rgb(var(--brand-white))] w-5 h-5 transition-transform duration-300 ease-in-out group-hover:translate-x-1" />
                 </div>
               </button>

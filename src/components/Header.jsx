@@ -65,12 +65,12 @@ export default function Header() {
       className={`fixed left-1/2 -translate-x-1/2 z-50 transition-all duration-500 ease-in-out overflow-hidden
         ${
           isScrolled
-            ? "top-3 backdrop-blur-lg shadow-md rounded-4xl sm:rounded-[40px] w-[86%] bg-[#20283f]/60"
+            ? "top-2 backdrop-blur-lg shadow-md rounded-4xl sm:rounded-[40px] w-[86%] bg-[#20283f]/60"
             : "top-0 w-full bg-transparent"
         }`}
     >
       {/* HEADER BAR */}
-      <div className="custom-container flex items-center py-4 md:py-3">
+      <div className="custom-container flex items-center py-4 md:py-5">
 
         {/* MOBILE LOGO */}
         <motion.a href="/" variants={itemVariants}
