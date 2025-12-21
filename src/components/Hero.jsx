@@ -226,7 +226,7 @@ export default function Hero() {
 
           {/* Description */}
           <div className="w-full lg:w-[38%] justify-items-center lg:justify-items-end">
-            <motion.p variants={heroItem} className="text-base text-[rgb(var(--brand-white))] text-center lg:text-left sm:max-w-5/6">
+            <motion.p variants={heroItem} className="text-base text-[rgb(var(--brand-white))] text-center lg:text-left sm:max-w-[88%] text-balance">
               I’m a Dubai-based Entrepreneur and Business Strategist specializing in AI Technology, Healthcare, and Longevity. With experience across the UAE in multinationals, private enterprises, and government initiatives like Digital Dubai and major Abu Dhabi projects, I drive innovation at the intersection of business and human well-being.
             </motion.p>
           </div>

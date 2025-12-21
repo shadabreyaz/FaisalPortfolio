@@ -74,7 +74,7 @@ export default function Header() {
 
         {/* MOBILE LOGO */}
         <motion.a href="/" variants={itemVariants}
-          className="lg:hidden font-medium font-nata text-2xl sm:text-3xl uppercase bg-linear-to-r from-[#93C5FD] via-[#C7D2FE] to-[#3B82F6]
+          className="lg:hidden font-semibold font-nata text-2xl sm:text-3xl uppercase bg-linear-to-r from-[#93C5FD] via-[#C7D2FE] to-[#3B82F6]
             bg-clip-text text-transparent">
             Qutbee
         </motion.a>
@@ -107,7 +107,7 @@ export default function Header() {
           {/* CENTER LOGO */}
           <div className="flex justify-center">
             <motion.a href="/" variants={itemVariants}
-              className="font-medium font-nata text-3xl uppercase bg-linear-to-r from-[#93C5FD] via-[#C7D2FE] to-[#3B82F6]
+              className="font-semibold font-nata text-3xl uppercase bg-linear-to-r from-[#93C5FD] via-[#C7D2FE] to-[#3B82F6]
               bg-clip-text text-transparent">
               Qutbee
             </motion.a>

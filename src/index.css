@@ -25,14 +25,11 @@
     @apply text-[rgb(var(--brand-gray))] leading-relaxed;
   }
 
-  ::selection {
-    @apply bg-[rgb(var(--brand-teal))] text-white;
-  }
 }
 
 @layer components {
   .custom-container {
-    max-width: 1440px;       /* max width you want */
+    max-width: 1400px;       /* max width you want */
     margin-inline: auto;     /* center horizontally */
     padding-inline: 1rem;    /* optional padding on left/right */
   }
