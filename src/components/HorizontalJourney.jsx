@@ -59,14 +59,14 @@ export default function HorizontalJourney() {
             subtitle="Leadership in Technology, Strategy & Digital Transformation"
             description="A decade-long journey shaping innovation across government, enterprise, and emerging technology ecosystems in the Middle East. Each role reflects a commitment to turning vision into impact leveraging AI, scalable systems, and operational excellence to build the future."
             items={experiences}
-            background="#B5F9FA"
+            background="bg-linear-to-br from-[#2C3654] via-[#2C3654] to-[#2E559B]"
         />
         <Timeline id="education"
             title="Education"
             subtitle="Strategic Thinking Grounded in Technical Excellence"
             description="My academic path mirrors the same philosophy that defines my professional journey combining strategic insight with strong technical foundations. Each stage of education strengthened my ability to navigate complexity, lead change, and design technology-driven solutions with long term impact."
             items={education}
-            background="#B5F9FA"
+            background="bg-linear-to-tr from-[#2C3654] via-[#2C3654] to-[#2E559B]"
         />
     </div>
   )
