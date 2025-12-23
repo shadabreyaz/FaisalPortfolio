@@ -40,7 +40,7 @@ const menuLinks = [
   { href: "#journey", label: "Journey" },
 ];
 
-export default function Header() {
+export default function Header({ hidden }) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
 
@@ -60,8 +60,25 @@ export default function Header() {
   return (
     <motion.nav
       initial="hidden"
-      animate="visible"
-      variants={headerVariants}
+      // animate="visible"
+      // variants={headerVariants}
+      animate={[
+        "visible",
+        hidden ? "hideHeader" : "showHeader",
+      ]}
+      variants={{
+        ...headerVariants,
+        hideHeader: {
+          y: "-120%",
+          opacity: 0,
+          transition: { duration: 0.4, ease: "easeInOut" },
+        },
+        showHeader: {
+          y: "0%",
+          opacity: 1,
+          transition: { duration: 0.4, ease: "easeInOut" },
+        },
+      }}
       className={`fixed left-1/2 -translate-x-1/2 z-50 transition-all duration-500 ease-in-out overflow-hidden
         ${
           isScrolled
