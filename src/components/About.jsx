@@ -1,9 +1,19 @@
 import React, { useState } from 'react'
-import { motion } from "framer-motion";
+import { motion, useTransform } from "framer-motion";
 import { HiArrowNarrowRight } from "react-icons/hi";
 import useScrollDirection from '../hook/UseScrollDirection';
 
-export default function About() {
+export default function About({scrollYProgress}) {
+  // const scale = useTransform(scrollYProgress, [0,1], [0.75, 1]);
+  // const rotate = useTransform(scrollYProgress, [0,1], [-5.5, 0]);
+  const scale = scrollYProgress
+  ? useTransform(scrollYProgress, [0, 1], [0.75, 1])
+  : 1;
+  const rotate = scrollYProgress
+  ? useTransform(scrollYProgress, [0, 1], [-5.5, 0])
+  : 0;
+
+
   const [animateDone, setAnimateDone] = useState(false);
 
   // Parent container animation
@@ -40,7 +50,8 @@ export default function About() {
 
   const scrollDir = useScrollDirection(); // 'up' or 'down'
   return (
-    <section id='about' className="py-12 sm:py-20 bg-[#EFF6FF]">
+    <motion.section id='about'  style={scrollYProgress ? { scale, rotate } : {}}
+     className="relative z-20 py-12 sm:py-20 bg-[#EFF6FF] md:min-h-screen">
         
       <div className="custom-container flex flex-col lg:flex-row items-end gap-10">
         <motion.div
@@ -105,6 +116,6 @@ export default function About() {
             </motion.div>
         </motion.div>
       </div>
-    </section>
+    </motion.section>
   )
 }

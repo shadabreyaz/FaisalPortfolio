@@ -1,4 +1,5 @@
-import { useState } from "react"
+import { useRef, useState } from "react"
+import { motion, useScroll, useTransform } from 'framer-motion';
 
 import Header from "./components/Header"
 import Hero from "./components/Hero"
@@ -9,15 +10,32 @@ import Contact from "./components/Contact"
 import ScrollTop from "./components/ScrollTop"
 import Modal from "./components/Modal"
 import Slider from "./components/Slider"
+import useIsDesktop from "./hook/useIsDesktop";
 
 function App() {
   const [hideHeader, setHideHeader] = useState(false);
   const [isOpen, setIsOpen] = useState(false);   // for popup
+
+  const isDesktop = useIsDesktop(768); // md breakpoint
+  const container = useRef(null);
+
+  // only create scrollYProgress on desktop
+  const { scrollYProgress } = isDesktop
+    ? useScroll({ target: container, offset: ["start start", "end end"] })
+    : { scrollYProgress: undefined };
+
   return (
     <>
       <Header hidden={hideHeader}/>
-      <Hero setIsOpen={setIsOpen}/>
-      <About />
+      <div ref={container} className="relative md:h-[224vh] lg:h-[200vh]">
+        {/* <Hero setIsOpen={setIsOpen} scrollYProgress={scrollYProgress}/>
+        <About scrollYProgress={scrollYProgress}/> */}
+        <Hero
+          setIsOpen={setIsOpen}
+          scrollYProgress={isDesktop ? scrollYProgress : undefined}
+        />
+        <About scrollYProgress={isDesktop ? scrollYProgress : undefined} />
+      </div>
       <HorizontalJourney setHideHeader={setHideHeader}/>
       <Advisory setIsOpen={setIsOpen}/>
       <Slider logos={[

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, useTransform } from "framer-motion";
 import { FaLocationDot } from "react-icons/fa6";
 import { HiArrowNarrowRight } from "react-icons/hi";
 import useScrollDirection from "../hook/UseScrollDirection";
@@ -78,7 +78,17 @@ const splitLetters = (text) =>
 
 /* ================= COMPONENT ================= */
 
-export default function Hero({setIsOpen}) {
+export default function Hero({setIsOpen, scrollYProgress}) {
+  // const scale = useTransform(scrollYProgress, [0,1], [1, 0.75]);
+  // const rotate = useTransform(scrollYProgress, [0,1], [0, -5.5]);
+
+  const scale = scrollYProgress
+  ? useTransform(scrollYProgress, [0, 1], [1, 0.75])
+  : 1;
+  const rotate = scrollYProgress
+  ? useTransform(scrollYProgress, [0, 1], [0, -5.5])
+  : 0;
+
   const scrollDir = useScrollDirection();
 
   /* ---- Looping titles ---- */
@@ -136,7 +146,9 @@ export default function Hero({setIsOpen}) {
         hidden: {},
         show: { transition: { staggerChildren: 0.4 } }, // stagger everything in order
       }}
-      className="w-full bg-[#f8fafc] relative pt-36 pb-4 sm:pt-0 sm:pb-0 sm:min-h-screen flex flex-col justify-end items-center"
+      // style={{scale, rotate}}
+      style={scrollYProgress ? { scale, rotate } : {}}
+      className="sticky top-0 w-full bg-[#f8fafc] pt-36 pb-4 sm:pt-0 sm:pb-0 min-h-screen flex flex-col justify-end items-center"
     >
 
       {/* Background Image */}
