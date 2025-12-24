@@ -27,15 +27,15 @@ const itemVariants = {
 };
 
 const socialLinks = [
-  { href: "#", icon: FaFacebookF, label: "Facebook" },
-  { href: "#", icon: FaInstagram, label: "Instagram" },
+  { href: "https://www.facebook.com/faisalqutbee/", icon: FaFacebookF, label: "Facebook" },
+  { href: "https://www.instagram.com/faisalqutbee/?hl=en", icon: FaInstagram, label: "Instagram" },
   { href: "#", icon: FaXTwitter, label: "Twitter" },
-  { href: "#", icon: FaLinkedinIn, label: "LinkedIn" },
+  { href: "https://www.linkedin.com/in/ifaisalrafiq/", icon: FaLinkedinIn, label: "LinkedIn" },
 ];
 
 const menuLinks = [
   { href: "#about", label: "About" },
-  { href: "#services", label: "Advisory" },
+  { href: "#advisory", label: "Advisory" },
   { href: "#contact", label: "Contact" },
   { href: "#journey", label: "Journey" },
 ];
@@ -60,8 +60,6 @@ export default function Header({ hidden }) {
   return (
     <motion.nav
       initial="hidden"
-      // animate="visible"
-      // variants={headerVariants}
       animate={[
         "visible",
         hidden ? "hideHeader" : "showHeader",
@@ -106,6 +104,7 @@ export default function Header({ hidden }) {
                 key={label}
                 href={href}
                 variants={itemVariants}
+                target="_blank"
                 className="group relative text-white font-medium text-lg flex items-center gap-1"
               >
                 <span className="font-semibold opacity-0 -translate-x-2 transition-all duration-300 group-hover:opacity-100 group-hover:translate-x-0">

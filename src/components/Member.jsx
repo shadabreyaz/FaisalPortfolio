@@ -39,28 +39,28 @@ export default function Member() {
       org: "Young Leaders AI Community",
       location: "Abu Dhabi",
       role: "Member",
-      logo: "/logos/young-leaders-ai.png",
+      logo: "/young.png",
       description: "Collaborating with emerging AI innovators to explore ethical, scalable, and transformative AI solutions.",
     },
     {
       org: "AI for Good",
       location: "Abu Dhabi",
       role: "Member",
-      logo: "/logos/ai-for-good.png",
+      logo: "/ai.png",
       description: "Engaging in initiatives leveraging AI to address global challenges and promote social impact.",
     },
     {
       org: "Euroweek Foundation",
       location: "Poland",
       role: "Youth Leader",
-      logo: "/logos/euroweek.png",
+      logo: "/euro.png",
       description: "Leading youth programs that foster international collaboration, leadership, and innovation.",
     },
     {
       org: "Longevity and Wellness Center",
       location: "Dubai",
       role: "Member",
-      logo: "/logos/longevity-center.png",
+      logo: "/long.png",
       description: "Contributing to discussions and initiatives focused on health, longevity, and wellness innovation.",
     },
   ];
@@ -101,7 +101,7 @@ export default function Member() {
               <img
                 src={member.logo}
                 alt={member.org}
-                className="w-16 h-16 object-contain mb-3 md:mb-2 lg:mb-4"
+                className="w-16 h-16 bg-slate-100 rounded-full object-contain mb-3 md:mb-2 lg:mb-4"
               />
               <h3 className="font-semibold text-base sm:text-lg mb-1 md:mb-0 lg:mb-2 text-white">{member.org}</h3>
               <p className="text-xs sm:text-sm md:text-base text-gray-100 mb-1">

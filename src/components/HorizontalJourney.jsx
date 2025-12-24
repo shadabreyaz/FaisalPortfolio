@@ -135,7 +135,7 @@ export default function HorizontalJourney({ setHideHeader }) {
       </div>
 
       {/* Desktop version                     to increase the scroll speed change height */}
-      <div className='bg-[#EFF6FF] h-[500vh] hidden md:block relative' ref={targetRef}>  
+      <div className='bg-[#EFF6FF] h-[630vh] hidden md:block relative' ref={targetRef}>  
         <div className="contentcontainer h-screen sticky top-0 flex items-center justify-start overflow-hidden">
           <motion.div className="images flex w-[300vw] py-0" style={{ x }}>
 

@@ -78,7 +78,7 @@ const splitLetters = (text) =>
 
 /* ================= COMPONENT ================= */
 
-export default function Hero() {
+export default function Hero({setIsOpen}) {
   const scrollDir = useScrollDirection();
 
   /* ---- Looping titles ---- */
@@ -118,6 +118,14 @@ export default function Hero() {
       },
     },
   };
+
+  // for smooth scroll
+  function smoothScroll(e, id) {
+    e.preventDefault();
+    const section = document.querySelector(id);
+    section?.scrollIntoView({ behavior: "smooth" });
+    setIsMenuOpen(false);
+  }
 
   return (
     <motion.section
@@ -181,16 +189,20 @@ export default function Hero() {
 
         {/* Buttons */}
         <motion.div variants={{ hidden: {}, show: { transition: { staggerChildren: 0.3 } } }} className="flex gap-4 flex-wrap justify-center">
-          <motion.button variants={buttonItem} className="cursor-pointer group relative flex items-center border-2 border-white px-4 pr-12 sm:pr-14 py-2 sm:py-2.5 bg-[rgb(var(--brand-white))] text-[rgb(var(--brand-black))] font-semibold rounded-full shadow-inner overflow-hidden active:scale-95 text-sm sm:text-base">
+          <motion.button variants={buttonItem} onClick={() => setIsOpen(true)}
+            className="cursor-pointer group relative flex items-center border-2 border-white px-4 pr-12 sm:pr-14 py-2 sm:py-2.5 bg-[rgb(var(--brand-white))] text-[rgb(var(--brand-black))] font-semibold rounded-full shadow-inner overflow-hidden active:scale-95 text-sm sm:text-base">
             Schedule a Call
             <div className="absolute right-1 top-1/2 -translate-y-1/2 size-7 sm:size-9 bg-linear-to-r from-[rgb(var(--brand-dark-blue))] to-[rgb(var(--brand-primary-blue))] rounded-full flex items-center justify-center transition-all duration-300 group-hover:w-[calc(100%-0.5rem)]">
               <HiArrowNarrowRight className="text-white w-5 h-5 group-hover:translate-x-1 transition" />
             </div>
           </motion.button>
 
-          <motion.button variants={buttonItem} className="cursor-pointer px-6 sm:px-10 py-2 sm:py-2.5 border-2 border-[rgb(var(--brand-light-blue))] hover:bg-linear-to-r from-[rgb(var(--brand-dark-blue))] to-[rgb(var(--brand-primary-blue))] hover:text-white bg-white font-semibold rounded-full shadow-inner active:scale-95 text-sm sm:text-base">
-            View My Work
-          </motion.button>
+          <a href="#advisory"  onClick={(e) => smoothScroll(e, '#advisory')}>
+            <motion.button variants={buttonItem} 
+              className="cursor-pointer px-6 sm:px-10 py-2 sm:py-2.5 border-2 border-[rgb(var(--brand-light-blue))] hover:bg-linear-to-r from-[rgb(var(--brand-dark-blue))] to-[rgb(var(--brand-primary-blue))] hover:text-white bg-white font-semibold rounded-full shadow-inner active:scale-95 text-sm sm:text-base">
+              View My Work
+            </motion.button>
+          </a>
         </motion.div>
 
         {/* Hero Content (Stats → Scroll → Description) */}
@@ -205,7 +217,7 @@ export default function Hero() {
             {[{ val: 100, label: 'Completed Projects' }, { val: 98, label: 'Client Satisfaction' }, { val: 10, label: 'Years of Experience' }].map((item, i) => (
               <motion.div key={i} variants={heroItem} className="flex flex-col items-center">
                 <h3 className="text-xl sm:text-3xl font-bold leading-tight text-[rgb(var(--brand-light-blue))]">
-                  <Counter to={item.val} duration={4} />{i === 1 ? '%' : '+'}
+                  <Counter to={item.val} duration={3} />{i === 1 ? '%' : '+'}
                 </h3>
                 <p className="text-[rgb(var(--brand-white))] text-lg font-medium">{item.label}</p>
               </motion.div>
