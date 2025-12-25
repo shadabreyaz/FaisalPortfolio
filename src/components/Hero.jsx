@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { motion, AnimatePresence, useTransform } from "framer-motion";
+import { motion, AnimatePresence, useTransform, useMotionValue,} from "framer-motion";
 import { FaLocationDot } from "react-icons/fa6";
 import { HiArrowNarrowRight } from "react-icons/hi";
+
 import useScrollDirection from "../hook/UseScrollDirection";
+import useIsDesktop from "../hook/useIsDesktop";
 import Counter from "./Counter";
 
 /* ================= VARIANTS ================= */
@@ -35,63 +37,49 @@ const buttonItem = {
 };
 
 /* ================= HELPERS ================= */
-
 const splitWords = (text) =>
   text.split(" ").map((word, idx) => (
-    <motion.span
-      key={idx}
-      variants={wordItem}
-      className="inline-block mr-2"
-    >
+    <motion.span key={idx} variants={wordItem} className="inline-block mr-2">
       {word}
     </motion.span>
   ));
 
 const letterItem = {
-  hidden: {
-    opacity: 0,
-    y: 12,
-    filter: "blur(6px)",
-  },
+  hidden: { opacity: 0, y: 12, filter: "blur(6px)" },
   show: {
     opacity: 1,
     y: 0,
     filter: "blur(0px)",
-    transition: {
-      duration: 0.54,
-      ease: "easeOut",
-    },
+    transition: { duration: 0.54, ease: "easeOut" },
   },
 };
 
 const splitLetters = (text) =>
   text.split("").map((char, idx) => (
-    <motion.span
-      key={idx}
-      variants={letterItem}
-      className="inline-block"
-    >
+    <motion.span key={idx} variants={letterItem} className="inline-block">
       {char === " " ? "\u00A0" : char}
     </motion.span>
   ));
 
 
 /* ================= COMPONENT ================= */
+export default function Hero({ setIsOpen, scrollYProgress }) {
+  /* ---- responsive ---- */
+  const isDesktop = useIsDesktop(768);
 
-export default function Hero({setIsOpen, scrollYProgress}) {
-  // const scale = useTransform(scrollYProgress, [0,1], [1, 0.75]);
-  // const rotate = useTransform(scrollYProgress, [0,1], [0, -5.5]);
-
-  const scale = scrollYProgress
-  ? useTransform(scrollYProgress, [0, 1], [1, 0.75])
-  : 1;
-  const rotate = scrollYProgress
-  ? useTransform(scrollYProgress, [0, 1], [0, -5.5])
-  : 0;
-
+  /* ---- scroll direction ---- */
   const scrollDir = useScrollDirection();
 
-  /* ---- Looping titles ---- */
+  /* ---- fallback MotionValue (CRITICAL) ---- */
+  const fallbackScroll = useMotionValue(0);
+
+  const safeScroll = scrollYProgress ?? fallbackScroll;
+
+  /* ---- ALWAYS call motion hooks ---- */
+  const scale = useTransform(safeScroll, [0, 1], [1, 0.7]);
+  const rotate = useTransform(safeScroll, [0, 1], [0, -5.5]);
+
+  /* ---- looping titles ---- */
   const titles = [
     "TECH SAVVY ENTREPRENEUR",
     "BUSINESS STRATEGIST",
@@ -105,20 +93,18 @@ export default function Hero({setIsOpen, scrollYProgress}) {
     if (!startLoop) return;
 
     const lettersCount = titles[titleIndex].length;
-
-    const staggerTime = 0.1; // same as your letter stagger
-    const animationTime = lettersCount * staggerTime * 1000; // ms
-    const pauseAfterWord = 1200; // 1.2s pause after full word
+    const staggerTime = 0.1;
+    const animationTime = lettersCount * staggerTime * 1000;
+    const pauseAfterWord = 1200;
 
     const timeout = setTimeout(() => {
       setTitleIndex((prev) => (prev + 1) % titles.length);
     }, animationTime + pauseAfterWord);
 
     return () => clearTimeout(timeout);
-  }, [startLoop, titleIndex]);
+  }, [startLoop, titleIndex, titles]);
 
-
-  /* ---- Container stagger ---- */
+  /* ---- stagger container ---- */
   const heroContainer = {
     hidden: {},
     show: {
@@ -129,12 +115,10 @@ export default function Hero({setIsOpen, scrollYProgress}) {
     },
   };
 
-  // for smooth scroll
+  /* ---- smooth scroll ---- */
   function smoothScroll(e, id) {
     e.preventDefault();
-    const section = document.querySelector(id);
-    section?.scrollIntoView({ behavior: "smooth" });
-    setIsMenuOpen(false);
+    document.querySelector(id)?.scrollIntoView({ behavior: "smooth" });
   }
 
   return (
@@ -144,30 +128,26 @@ export default function Hero({setIsOpen, scrollYProgress}) {
       viewport={{ once: false, amount: 0.4 }}
       variants={{
         hidden: {},
-        show: { transition: { staggerChildren: 0.4 } }, // stagger everything in order
+        show: { transition: { staggerChildren: 0.4 } },
       }}
-      // style={{scale, rotate}}
-      style={scrollYProgress ? { scale, rotate } : {}}
+      style={isDesktop ? { scale, rotate } : {}}
       className="sticky top-0 w-full bg-[#f8fafc] pt-36 pb-4 sm:pt-0 sm:pb-0 min-h-screen flex flex-col justify-end items-center"
     >
-
-      {/* Background Image */}
+      {/* Background */}
       <div
         className="absolute inset-0 z-0 bg-cover bg-left md:bg-center"
-        style={{
-          backgroundImage: "url('/hero-bg.webp')",
-        }}
+        style={{ backgroundImage: "url('/hero-bg.webp')" }}
       />
-
-      {/* Gradient Overlay */}
       <div className="absolute inset-0 z-0 bg-linear-to-t from-[#20283f]/95 via-[#20283f]/55 to-[#20283f]/40" />
 
       {/* Content */}
       <div className="relative z-10 custom-container text-center flex flex-col items-center">
-
         {/* Location */}
-        <motion.span variants={heroItem} className="font-semibold text-sm sm:text-base rounded-full px-4 py-1 mb-4 border border-[rgb(var(--brand-white))] text-white flex items-center gap-2">
-          <FaLocationDot className="text-white" /> Abu Dhabi, UAE
+        <motion.span
+          variants={heroItem}
+          className="font-semibold text-sm sm:text-base rounded-full px-4 py-1 mb-4 border border-white text-white flex items-center gap-2"
+        >
+          <FaLocationDot /> Abu Dhabi, UAE
         </motion.span>
 
         {/* H1 */}
@@ -176,10 +156,12 @@ export default function Hero({setIsOpen, scrollYProgress}) {
           className="text-3xl sm:text-4xl md:text-5xl leading-tight text-white"
         >
           {splitWords("Hi, I'm")}
-          <span className="text-[rgb(var(--brand-light-blue))]">{splitWords("Faisal Qutbee")}</span>
+          <span className="text-[rgb(var(--brand-light-blue))]">
+            {splitWords("Faisal Qutbee")}
+          </span>
         </motion.h1>
 
-        {/* H2 looping titles */}
+        {/* Looping title */}
         <motion.div
           variants={heroItem}
           onAnimationComplete={() => setStartLoop(true)}
@@ -188,11 +170,11 @@ export default function Hero({setIsOpen, scrollYProgress}) {
           <AnimatePresence mode="wait">
             <motion.h2
               key={titles[titleIndex]}
-              variants={{ hidden: {}, show: { transition: { staggerChildren: 0.1 } } }}
               initial="hidden"
               animate="show"
               exit={{ opacity: 0 }}
-              className="text-xl sm:text-3xl md:text-4xl font-semibold tracking-wide text-[rgb(var(--brand-white))]"
+              variants={{ hidden: {}, show: { transition: { staggerChildren: 0.1 } } }}
+              className="text-xl sm:text-3xl md:text-4xl font-semibold tracking-wide text-white"
             >
               {splitLetters(titles[titleIndex])}
             </motion.h2>
@@ -200,18 +182,26 @@ export default function Hero({setIsOpen, scrollYProgress}) {
         </motion.div>
 
         {/* Buttons */}
-        <motion.div variants={{ hidden: {}, show: { transition: { staggerChildren: 0.3 } } }} className="flex gap-4 flex-wrap justify-center">
-          <motion.button variants={buttonItem} onClick={() => setIsOpen(true)}
-            className="cursor-pointer group relative flex items-center border-2 border-white px-4 pr-12 sm:pr-14 py-2 sm:py-2.5 bg-[rgb(var(--brand-white))] text-[rgb(var(--brand-black))] font-semibold rounded-full shadow-inner overflow-hidden active:scale-95 text-sm sm:text-base">
+        <motion.div
+          variants={{ hidden: {}, show: { transition: { staggerChildren: 0.3 } } }}
+          className="flex gap-4 flex-wrap justify-center"
+        >
+          <motion.button
+            variants={buttonItem}
+            onClick={() => setIsOpen(true)}
+            className="cursor-pointer group relative flex items-center border-2 border-white px-4 pr-12 sm:pr-14 py-2 sm:py-2.5 bg-[rgb(var(--brand-white))] text-[rgb(var(--brand-black))] font-semibold rounded-full shadow-inner overflow-hidden active:scale-95 text-sm sm:text-base"
+          >
             Schedule a Call
             <div className="absolute right-1 top-1/2 -translate-y-1/2 size-7 sm:size-9 bg-linear-to-r from-[rgb(var(--brand-dark-blue))] to-[rgb(var(--brand-primary-blue))] rounded-full flex items-center justify-center transition-all duration-300 group-hover:w-[calc(100%-0.5rem)]">
-              <HiArrowNarrowRight className="text-white w-5 h-5 group-hover:translate-x-1 transition" />
+              <HiArrowNarrowRight className="text-white size-5 group-hover:translate-x-1 transition" />
             </div>
           </motion.button>
 
-          <a href="#advisory"  onClick={(e) => smoothScroll(e, '#advisory')}>
-            <motion.button variants={buttonItem} 
-              className="cursor-pointer px-6 sm:px-10 py-2 sm:py-2.5 border-2 border-[rgb(var(--brand-light-blue))] hover:bg-linear-to-r from-[rgb(var(--brand-dark-blue))] to-[rgb(var(--brand-primary-blue))] hover:text-white bg-white font-semibold rounded-full shadow-inner active:scale-95 text-sm sm:text-base">
+          <a href="#advisory" onClick={(e) => smoothScroll(e, "#advisory")}>
+            <motion.button
+              variants={buttonItem}
+              className="cursor-pointer px-6 sm:px-10 py-2 sm:py-2.5 border-2 border-[rgb(var(--brand-light-blue))] hover:bg-linear-to-r from-[rgb(var(--brand-dark-blue))] to-[rgb(var(--brand-primary-blue))] hover:text-white bg-white font-semibold rounded-full shadow-inner active:scale-95 text-sm sm:text-base"
+            >
               View My Work
             </motion.button>
           </a>
@@ -255,9 +245,8 @@ export default function Hero({setIsOpen, scrollYProgress}) {
             </motion.p>
           </div>
         </motion.div>
+
       </div>
-
     </motion.section>
-
   );
 }

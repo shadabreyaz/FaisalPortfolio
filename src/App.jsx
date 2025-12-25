@@ -19,22 +19,26 @@ function App() {
   const isDesktop = useIsDesktop(768); // md breakpoint
   const container = useRef(null);
 
-  // only create scrollYProgress on desktop
-  const { scrollYProgress } = isDesktop
-    ? useScroll({ target: container, offset: ["start start", "end end"] })
-    : { scrollYProgress: undefined };
+  // ✅ ALWAYS called
+  const { scrollYProgress } = useScroll({
+    target: container,
+    offset: ["start start", "end end"],
+  });
+
+  // ✅ Decide usage here
+  const desktopScroll = isDesktop ? scrollYProgress : null;  
 
   return (
     <>
       <Header hidden={hideHeader}/>
-      <div ref={container} className="relative md:h-[224vh] lg:h-[200vh]">
+      <div ref={container} className="relative lg:h-[200vh]">
         {/* <Hero setIsOpen={setIsOpen} scrollYProgress={scrollYProgress}/>
         <About scrollYProgress={scrollYProgress}/> */}
         <Hero
           setIsOpen={setIsOpen}
-          scrollYProgress={isDesktop ? scrollYProgress : undefined}
+          scrollYProgress={desktopScroll}
         />
-        <About scrollYProgress={isDesktop ? scrollYProgress : undefined} />
+        <About scrollYProgress={desktopScroll} />
       </div>
       <HorizontalJourney setHideHeader={setHideHeader}/>
       <Advisory setIsOpen={setIsOpen}/>
